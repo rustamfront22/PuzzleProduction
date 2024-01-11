@@ -1,33 +1,43 @@
 <template>
   <div class="wrapper">
-    <div class="server-list">
-      <div class="card">
-        <ul>
-          <li
-            v-for="(server, index) in servers"
-            :key="index"
-            @click="selectServer(server)"
-          >
-            {{ server.server_name }}
-          </li>
-        </ul>
-      </div>
-    </div>
+    <div class="container">
+      <div class="content">
+        <div class="server-list">
+          <div class="card">
+            <ul>
+              <li
+                v-for="(server, index) in servers"
+                :key="index"
+                @click="selectServer(server)"
+              >
+                {{ server.server_name }}
+              </li>
+            </ul>
+          </div>
+        </div>
 
-    <div class="server-form" v-if="selectedServer">
-      <input
-        v-model="selectedServer.server_name"
-        type="text"
-        autocomplete="off"
-        name="text"
-        class="input"
-        placeholder="Server Name"
-      />
-      <select v-model="selectedServer.server_type" class="select" name="serverType">
-        <option value="vds">VDS</option>
-        <option value="dedicated">Dedicated</option>
-        <option value="hosting">Hosting</option>
-      </select>
+        <div class="server-form" v-if="selectedServer">
+          <input
+            v-model="selectedServer.server_name"
+            type="text"
+            autocomplete="off"
+            name="text"
+            class="input"
+            placeholder="Server Name"
+          />
+          <select
+            v-model="selectedServer.server_type"
+            class="select"
+            name="serverType"
+          >
+            <option value="vds">VDS</option>
+            <option value="dedicated">Dedicated</option>
+            <option value="hosting">Hosting</option>
+          </select>
+          <button @click="saveData" class="save-button">Save</button>
+          <p v-if="saveMessage" class="save-message">{{ saveMessage }}</p>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -66,42 +76,28 @@ export default {
       localStorage.setItem("selectedServer", JSON.stringify(server));
     };
 
-    watch(servers, (newServers) => {
-      localStorage.setItem("servers", JSON.stringify(newServers));
-    }, { deep: true });
+    const saveMessage = ref("");
 
-    return { servers, selectedServer, selectServer };
+    const saveData = () => {
+      localStorage.setItem("servers", JSON.stringify(servers.value));
+      saveMessage.value = "Data saved successfully";
+      setTimeout(() => {
+        saveMessage.value = "";
+      }, 3000);
+    };
+
+    watch(
+      servers,
+      (newServers) => {
+        localStorage.setItem("servers", JSON.stringify(newServers));
+      },
+      { deep: true }
+    );
+
+    return { servers, selectedServer, selectServer, saveData, saveMessage };
   },
 };
 </script>
 
-
-
 <style lang="scss">
-.wrapper {
-  display: flex;
-  gap: 50px;
-  justify-content: center;
-  align-items: baseline;
-  margin-top: 200px;
-}
-
-.server-list {
-  ul {
-    list-style: none;
-    padding: 0;
-  }
-  li {
-    cursor: pointer;
-    margin-bottom: 10px;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    overflow: hidden;
-    width: 160px;
-  }
-}
-
-.server-form {
-  margin-left: 20px;
-}
 </style>
