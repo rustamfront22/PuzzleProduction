@@ -94,7 +94,6 @@
             }
         }
     }
-
     .save-button {
         position: relative;
         font-size: 12px;
@@ -146,21 +145,22 @@
         color: green;
         margin-top: 10px;
     }
-}
-.input {
-    border: none;
-    outline: none;
-    border-radius: 15px;
-    padding: 1em;
-    background-color: #ccc;
-    box-shadow: inset 2px 5px 10px rgba(0, 0, 0, 0.3);
-    transition: 300ms ease-in-out;
-    margin-right: 20px;
-    &:focus {
-        background-color: white;
-        transform: scale(1.05);
-        box-shadow:
-            13px 13px 100px #969696,
-            -13px -13px 100px #ffffff;
+    .input {
+        margin-bottom: 20px;
+        border: none;
+        outline: none;
+        border-radius: 15px;
+        padding: 1em;
+        background-color: #ccc;
+        box-shadow: inset 2px 5px 10px rgba(0, 0, 0, 0.3);
+        transition: 300ms ease-in-out;
+        margin-right: 20px;
+        &:focus {
+            background-color: white;
+            transform: scale(1.05);
+            box-shadow:
+                13px 13px 100px #969696,
+                -13px -13px 100px #ffffff;
+        }
     }
 }
